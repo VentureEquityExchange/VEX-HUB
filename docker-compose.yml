@@ -1,0 +1,48 @@
+nginx:
+  build: ./nginx
+  links:
+   - "node1"
+   - "node2"
+   - "node3"
+  ports:
+   - "80:80"
+node1:
+  build: .
+  volumes:
+   - .:/app
+  links:
+   - "db"
+  ports:
+  - "3000"
+  - "35729"
+  environment:
+   NODE_ENV: development
+   ethpass: "0af348c010952c176b49"
+node2:
+  build: .
+  volumes:
+   - .:/app
+  links:
+   - "db"
+  ports:
+  - "3000"
+  - "35729"
+  environment:
+   NODE_ENV: development
+   ethpass: "0af348c010952c176b49"
+node3:
+  build: .
+  volumes:
+   - .:/app
+  links:
+   - "db"
+  ports:
+  - "3000"
+  - "35729"
+  environment:
+   NODE_ENV: development
+   ethpass: "0af348c010952c176b49"
+db:
+ image: mongo
+ ports:
+  - "27017"
