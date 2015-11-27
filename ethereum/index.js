@@ -44,7 +44,6 @@ var gethIPC = function(payload, next){
 };
 
 exports.gethSocket = gethSocket;
-exports.Web3 = Web3;
 
 exports.Personal = {
 	newAccount : function(next){

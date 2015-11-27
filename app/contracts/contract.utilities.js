@@ -1,3 +1,4 @@
+var net = require('net');
 var solc = require('solc');
 var Promise = require('bluebird');
 var Contract = require('./contract.model');
@@ -5,11 +6,53 @@ var path = require('path');
 var contractsFolder = path.normalize(__dirname+'/turing_contracts');
 var fs = Promise.promisifyAll(require('fs'));
 var Ethereum = require('../../ethereum');
+var ethpass = process.env.ethpass;
+var Web3 = require('web3');
+var web3 = new Web3();
+web3.setProvider(new web3.providers.IpcProvider(Ethereum.gethSocket, net));
+
+function createAccount(){
+	return new Promise(function(resolve, reject){
+		Ethereum.Personal.newAccount(function(account){
+			if(!account){reject(account)}
+			Ethereum.Miner.setEtherbase(account, function(set){
+				if(set != null) {reject(set);}
+				resolve(account);
+			});
+		});
+	});
+}
+
+function configureCoinbase(){
+	return new Promise(function(resolve, reject){
+		web3.eth.getCoinbase(function(err, account){
+			if(err){reject(err);}
+			if(account == null){
+				createAccount().then(function(account){
+					resolve(account);
+				}).catch(function(error){
+					if(error){reject(error);}
+				});
+			} else {
+				resolve(account);
+			}
+		});	
+	})
+	
+}
+
+setTimeout(function(){
+	configureCoinbase().then(function(coinbase){
+		console.log('Coinbase set on account: '+coinbase);
+	}).catch(function(error){
+		console.log(error);
+	});
+}, 10000);
 
 function unlock(){
 	var Account;
 	return new Promise(function(resolve, reject){
-		Ethereum.web3.eth.getCoinbase(function(err, account){
+		Web3.eth.getCoinbase(function(err, account){
 			if(err){reject(err)}
 			Account = account;
 			Ethereum.Personal.unlockAccount(account, function(unlocked){

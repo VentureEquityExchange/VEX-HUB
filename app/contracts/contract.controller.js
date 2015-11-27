@@ -4,9 +4,25 @@ var mongoose = require('mongoose'),
 
 
 exports.get = function(req, res, next){
-  res.send('Hello');
+  Contract.find({}, function(err, contracts){
+    if(err){res.send(err)}
+      res.send(contracts);
+  });
 }
 
 exports.deploy = function(req, res, next){
-  res.send('deploy');
+  var contract = req.params.contract;
+
+  cUtils.deploy(contract).then(function(deployed){
+    console.log('Deployed Contract:  '+deployed);
+    return cUtils.save(deployed);
+  }).then(function(saved){
+    res.send(saved);
+  }).catch(function(error){
+    res.send(error);
+  });
+}
+
+exports.update = function(req, res, next){
+
 }
