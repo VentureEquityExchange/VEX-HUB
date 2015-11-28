@@ -2,7 +2,14 @@ var net = require('net');
 var path = require('path');
 var fs = require('fs');
 var Web3 = require('web3');
-var gethSocket = ('/Users/ryan/Library/Ethereum/geth.ipc') // ('/root/.ethereum/geth.ipc');
+
+
+if(process.argv[2] == docker){
+	var gethSocket = ('/root/.ethereum/geth.ipc');
+} else {
+	var gethSocket = ('/Users/ryan/Library/Ethereum/geth.ipc');
+}
+
 
 var ethpass = process.env.ethpass || "0af348c010952c176b49";
 
