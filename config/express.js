@@ -29,6 +29,8 @@ module.exports = function(app, config) {
 
   // API Routes
   require(config.root+'/app/contracts/contract.routes')(app);
+  require(config.root+'/app/account/account.routes')(app);
+  require(config.root+'/app/ethereum/ethereum.routes')(app);
 
   /*
   var controllers = glob.sync(config.root + '/app/controllers/*.js');

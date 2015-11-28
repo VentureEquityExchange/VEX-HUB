@@ -15,4 +15,4 @@ do
 done
  
 # start node app
-node app.js
+node app.js docker

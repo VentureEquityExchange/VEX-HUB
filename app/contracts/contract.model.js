@@ -4,7 +4,8 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 var ContractSchema = new Schema({
-  contract : Object,
+  name : String,
+  deployed : Object,
   account: String
 });
 

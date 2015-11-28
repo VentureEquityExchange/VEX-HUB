@@ -1,4 +1,4 @@
-contract vregistration {
+contract Registration {
 	address [] public ventures;
 
 	function register(address _venture) returns (bool){

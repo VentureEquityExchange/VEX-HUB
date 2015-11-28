@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
   Contract = require('./contract.model'),
-  cUtils = require('./contract.utilities');
+  cUtils = require('./contract.utilities'),
+  Promise = require('bluebird');
 
 
 exports.get = function(req, res, next){
@@ -14,10 +15,17 @@ exports.deploy = function(req, res, next){
   var contract = req.params.contract;
 
   cUtils.deploy(contract).then(function(deployed){
-    console.log('Deployed Contract:  '+deployed);
-    return cUtils.save(deployed);
-  }).then(function(saved){
-    res.send(saved);
+    res.send(deployed);
+  }).catch(function(error){
+    res.send(error);
+  });
+}
+
+exports.add = function(req, res, next){
+  var contract = req.params.contract;
+
+  cUtils.add(contract).then(function(data){
+    res.send(data);
   }).catch(function(error){
     res.send(error);
   });

@@ -8,6 +8,7 @@ module.exports = function(app){
 
 router.get('/', controller.get);
 router.post('/deploy/:contract', controller.deploy);
+router.post('/add/:contract', controller.add);
 router.post('/update', controller.update);
 
 exports.router = router;
