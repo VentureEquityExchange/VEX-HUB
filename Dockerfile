@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update --fix-missing
 RUN apt-get install -q -y build-essential gcc make software-properties-common git curl g++ python-dev python-pip libkrb5-dev
-RUN apt-get install -q -y netcat libcairo2-dev libjpeg-turbo8-dev libyaml-0-2 libpango1.0-dev libgif-dev
+RUN apt-get install -q -y netcat-traditional libcairo2-dev libjpeg-turbo8-dev libyaml-0-2 libpango1.0-dev libgif-dev
 RUN apt-get install -q -y libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libmagic-dev libbz2-dev
 
 # Install Node version 0.12.7
@@ -15,7 +15,7 @@ RUN mv node* node && \
     ln -s /node/bin/node /usr/local/bin/node && \
     ln -s /node/bin/npm /usr/local/bin/npm
 
-
+ 	
 # Install NPM global dependencies
 
 RUN npm install -g grunt-cli
@@ -42,6 +42,7 @@ RUN bower install --config.interactive=false --allow-root --force-latest
 
 ADD . /app
 
+RUN rm -rf /root/.ethereum
 RUN rm -rf /node_modules/
 RUN npm cache clean
 RUN npm install

@@ -10,6 +10,8 @@ var config = {
     app: {
       name: 'vex-hub'
     },
+    ethpassFile : path.normalize(rootPath+'/config/ethpass.txt'),
+    ethpass : process.env.ethpass || "0af348c010952c176b49",
     port: 3000,
     db: 'mongodb://'+DB_HOST+'/vex-hub-development'
   },
@@ -19,6 +21,8 @@ var config = {
     app: {
       name: 'vex-hub'
     },
+    ethpassFile : path.normalize(rootPath+'/config/ethpass.txt'),
+    ethpass : process.env.ethpass || "0af348c010952c176b49",
     port: 3000,
     db: 'mongodb://'+DB_HOST+'/vex-hub-test'
   },
@@ -28,6 +32,8 @@ var config = {
     app: {
       name: 'vex-hub'
     },
+    ethpassFile : path.normalize(rootPath+'/config/ethpass.txt'),
+    ethpass : process.env.ethpass || "0af348c010952c176b49",
     port: 3000,
     db: 'mongodb://'+DB_HOST+'/vex-hub-production'
   }

@@ -2,7 +2,7 @@ var net = require('net');
 var solc = require('solc');
 var Promise = require('bluebird');
 var mongoose = require('mongoose');
-var Contract = mongoose.model('Contract');
+var Contract = require('./contract.model');
 var path = require('path');
 var contractsFolder = path.normalize(__dirname+'/turing_contracts/');
 var fs = Promise.promisifyAll(require('fs'));
@@ -48,13 +48,11 @@ function deploy(contract){
 			web3.eth.defaultAccount = account;
 			return compileContract(contract);
 		}).then(function(comp){
-			web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545"));
+			web3.setProvider(new web3.providers.IpcProvider(Ethereum.gethSocket, net));
 			var c = (Object.keys(comp.contracts))[0];
 			var abi = JSON.parse(comp.contracts[c].interface); // Always use JSON.parse().
 			var code = comp.contracts[c].bytecode;
 
-			console.log(comp);
-			
 			web3.eth.contract(abi).new({data: code, gas : 1000000}, 
 				function(error, deployed){
 				if(error) throw error; // should get caught below..

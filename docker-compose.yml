@@ -15,7 +15,7 @@ node1:
   ports:
   - "3000"
   - "35729"
-  - "8545"
+  - "5445"
   environment:
    NODE_ENV: development
    ethpass: "0af348c010952c176b49"
@@ -28,7 +28,7 @@ node2:
   ports:
   - "3000"
   - "35729"
-  - "8545"
+  - "5445"
   environment:
    NODE_ENV: development
    ethpass: "0af348c010952c176b49"
@@ -41,7 +41,7 @@ node3:
   ports:
   - "3000"
   - "35729"
-  - "8545"
+  - "5445"
   environment:
    NODE_ENV: development
    ethpass: "0af348c010952c176b49"

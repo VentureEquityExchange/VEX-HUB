@@ -2,9 +2,9 @@ var net = require('net');
 var path = require('path');
 var fs = require('fs');
 var Web3 = require('web3');
+var config = require('../config/config');
 
-
-if(process.argv[2] == docker){
+if(process.argv[2] == 'docker'){
 	var gethSocket = ('/root/.ethereum/geth.ipc');
 } else {
 	var gethSocket = ('/Users/ryan/Library/Ethereum/geth.ipc');

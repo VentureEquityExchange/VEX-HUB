@@ -3,7 +3,7 @@ var Ethereum = require('../ethereum');
 var Promise = require('bluebird');
 var Web3 = require('web3');
 var web3 = new Web3();
-web3.setProvider(new web3.providers.IpcProvider(Ethereum.gethSocket, net));
+
 
 function mine(){
 	return new Promise(function(resolve, reject){
@@ -27,6 +27,7 @@ function createAccount(){
 }
 
 function configureCoinbase(){
+	web3.setProvider(new web3.providers.IpcProvider(Ethereum.gethSocket, net));
 	return new Promise(function(resolve, reject){
 		web3.eth.getCoinbase(function(err, account){
 			if(err){reject(err);}

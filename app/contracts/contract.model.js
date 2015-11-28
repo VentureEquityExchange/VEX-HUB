@@ -14,5 +14,5 @@ ContractSchema.virtual('date')
     return this._id.getTimestamp();
   });
 
-mongoose.model('Contract', ContractSchema);
+module.exports = mongoose.model('Contract', ContractSchema)
 
