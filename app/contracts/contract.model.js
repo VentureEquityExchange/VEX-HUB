@@ -5,7 +5,9 @@ var mongoose = require('mongoose'),
 
 var ContractSchema = new Schema({
   name : String,
-  deployed : Object,
+  address : String,
+  abi : Array,
+  txhash : String,
   account: String
 });
 

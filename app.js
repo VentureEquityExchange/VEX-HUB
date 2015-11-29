@@ -24,11 +24,13 @@ var io = require('socket.io')(5445);
 
 io.on('connection', function(socket){
 	socket.emit('connected', {message: "Connected to VEX-HUB"});
+
+	// Socket.io routes for Desktop Applications
+	require('./app/directorate/directorate.socket')(socket);
+	require('./app/tradedesk/tradedesk.socket')(socket);
 });
 
-// Socket.io routes for Desktop Applications
-require('./app/directorate/directorate.socket')(io);
-require('./app/tradedesk/tradedesk.socket')(io);
+
 
 require('./config/express')(app, config);
 
@@ -43,9 +45,9 @@ var options = { debug : true, proxied: false};
 app.use('/peerjs', ExpressPeerServer(app, options));
 
 /* Running Ethereum as Child Process execution */
-console.log(process.argv[2] == 'docker');
+
 if(process.argv[2] == 'docker'){
-	console.log('Process is Dockerized.');
+	console.log('HUB is Dockerized.');
 	console.log('Ethereum Node Starting...');
 	Promise.delay(0).then(function(){
 		var Geth = exec('geth --testnet --password '+config.ethpassFile+' account new', {maxBuffer: 1024*600}, function(error, stdout, stderr){
@@ -76,7 +78,7 @@ if(process.argv[2] == 'docker'){
 		console.log(error);
 	});
 } else if(process.argv[2] == 'local'){
-	
+	console.log('HUB is running locally.');
 	Promise.delay(0).then(function(){
 		return ethereumEnv.configureCoinbase();
 	}).then(function(coinbase){

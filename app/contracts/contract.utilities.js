@@ -11,7 +11,7 @@ var ethpass = process.env.ethpass;
 var Web3 = require('web3');
 var web3 = new Web3();
 
-// web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545"));
+// 	
 // web3.setProvider(new web3.providers.IpcProvider(Ethereum.gethSocket, net));
 
 function unlock(){
@@ -62,7 +62,9 @@ function deploy(contract){
 					console.log('Contract mined! Contract Address: '+deployed.address);
 					var C = new Contract();
 					C.name = contract;
-					C.deployed = deployed;
+					C.address = deployed.address;
+					C.txhash = deployed.txhash;
+					C.abi = deployed.abi;
 					C.account = web3.eth.defaultAccount;
 					C.save(function(err, saved){
 						if(err){reject(err);}

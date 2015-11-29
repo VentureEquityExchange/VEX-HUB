@@ -3,7 +3,6 @@ var mongoose = require('mongoose'),
   cUtils = require('./contract.utilities'),
   Promise = require('bluebird');
 
-
 exports.get = function(req, res, next){
   Contract.find({}, function(err, contracts){
     if(err){res.send(err)}
