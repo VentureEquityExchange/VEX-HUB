@@ -1,13 +1,21 @@
 var Contract = require('../contracts/contract.model');
-var Promise = require('bluebird');
-var fs = Promise.promisifyAll(require('fs'));
+var Utilities = require('./directorate.utils');
 
 module.exports = function(socket){
-	Contract.findOne({name : 'registration.sol'}, function(err, contracts){
-		if(err) console.log(err);
-		socket.emit('directorate_contracts', contracts);
+	socket.on('directorate_contracts', function(){
+		Utilities.getContracts().then(function(contracts){
+			socket.emit('directorate_contracts', contracts);
+		}).catch(function(error){
+			console.log(error);
+		});
 	});
 
+	socket.on('registrar', function(){
+		Contract.findOne({name : 'registration.sol'}, function(err, contract){
+			if(err) console.log(err);
+			socket.emit('registration.sol', contract);
+		});		
+	});
 	
 	socket.on('directorate_nodeInfo', function(data){
 		// Handle the data here via some utility function; e.g. store in db..
