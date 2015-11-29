@@ -6,8 +6,10 @@ var config = require('../config/config');
 
 if(process.argv[2] == 'docker'){
 	var gethSocket = ('/root/.ethereum/geth.ipc');
-} else {
+
+} else if (process.argv[2] == 'local'){
 	var gethSocket = ('/Users/ryan/Library/Ethereum/geth.ipc');
+	
 }
 
 

@@ -21,7 +21,14 @@ models.forEach(function (model) {
 });
 var app = express();
 var io = require('socket.io')(5445);
-require('./config/socketio')(io);
+
+io.on('connection', function(socket){
+	socket.emit('connected', {message: "Connected to VEX-HUB"});
+});
+
+// Socket.io routes for Desktop Applications
+require('./app/directorate/directorate.socket')(io);
+require('./app/tradedesk/tradedesk.socket')(io);
 
 require('./config/express')(app, config);
 
@@ -69,6 +76,7 @@ if(process.argv[2] == 'docker'){
 		console.log(error);
 	});
 } else if(process.argv[2] == 'local'){
+	
 	Promise.delay(0).then(function(){
 		return ethereumEnv.configureCoinbase();
 	}).then(function(coinbase){
@@ -79,4 +87,5 @@ if(process.argv[2] == 'docker'){
 	}).catch(function(error){
 		console.log(error);
 	});	
+
 };
