@@ -10,9 +10,9 @@ function getContracts(){
 		fs.readdir(contractsFolder, function(err, contracts){
 			if(err) {reject(err)};
 			async.forEach(contracts, function(contract, callback){
-			    fs.readFile(contractsFolder+'/'+contract, {encoding: 'utf8'}, function(err, file){
+			    fs.readFile(contractsFolder+'/'+contract, {encoding: 'utf8'}, function(err, content){
 			    	if(err) {reject(err)};
-			    	Contracts.push(file);
+			    	Contracts.push({file: contract, source: content});
 			    	callback();
 			    });
 			  }, function(err){
