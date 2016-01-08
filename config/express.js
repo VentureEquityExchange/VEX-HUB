@@ -14,7 +14,8 @@ module.exports = function(app, config) {
   app.locals.ENV_DEVELOPMENT = env == 'development';
   
   app.set('views', config.root + '/app/views');
-  app.set('view engine', 'jade');
+  app.set('view engine', 'jsx');
+  app.engine('jsx', require('express-react-views').createEngine());
 
   // app.use(favicon(config.root + '/public/img/favicon.ico'));
   app.use(logger('dev'));
@@ -24,10 +25,12 @@ module.exports = function(app, config) {
   }));
   app.use(cookieParser());
   app.use(compress());
-  app.use(express.static(config.root + '/public'));
+  // app.use(express.static(config.root + '/angular-app'));
   app.use(methodOverride());
+  app.use(require('prerender-node'));
 
   // API Routes
+  require(config.root+'/app/main/main.routes')(app);
   require(config.root+'/app/contracts/contract.routes')(app);
   require(config.root+'/app/account/account.routes')(app);
   require(config.root+'/app/ethereum/ethereum.routes')(app);
@@ -49,21 +52,13 @@ module.exports = function(app, config) {
   if(app.get('env') === 'development'){
     app.use(function (err, req, res, next) {
       res.status(err.status || 500);
-      res.render('error', {
-        message: err.message,
-        error: err,
-        title: 'error'
-      });
+      res.send('error');
     });
   }
 
   app.use(function (err, req, res, next) {
     res.status(err.status || 500);
-      res.render('error', {
-        message: err.message,
-        error: {},
-        title: 'error'
-      });
+      res.send('error');
   });
 
 };

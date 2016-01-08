@@ -5,15 +5,15 @@ var express = require('express'),
   Promise = require('bluebird'),
   config = require('./config/config'),
   glob = require('glob'),
-  mongoose = require('mongoose'),
+  // mongoose = require('mongoose'),
   exec = require('child_process').exec,
   ethereumEnv = require('./config/ethereum_env');
 
-mongoose.connect(config.db);
-var db = mongoose.connection;
-db.on('error', function () {
-  throw new Error('unable to connect to database at ' + config.db);
-});
+// mongoose.connect(config.db);
+// var db = mongoose.connection;
+// db.on('error', function () {
+//   throw new Error('unable to connect to database at ' + config.db);
+// });
 
 var models = glob.sync(config.root + '/app/models/*.js');
 models.forEach(function (model) {

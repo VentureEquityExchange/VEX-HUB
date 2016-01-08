@@ -3,6 +3,7 @@ var fs = require('fs');
 var path = require('path');
 var contractsFolder = path.normalize(__dirname+'/directorate_contracts');
 var async = require('async');
+var solc = require('solc');
 
 function getContracts(){
 	var Contracts = [];
@@ -12,7 +13,8 @@ function getContracts(){
 			async.forEach(contracts, function(contract, callback){
 			    fs.readFile(contractsFolder+'/'+contract, {encoding: 'utf8'}, function(err, content){
 			    	if(err) {reject(err)};
-			    	Contracts.push({file: contract, source: content});
+			    	var output = solc.compile(content, 1);
+			    	Contracts.push({compiled: output});
 			    	callback();
 			    });
 			  }, function(err){
